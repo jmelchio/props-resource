@@ -8,7 +8,7 @@ import sys
 
 def handler(signum, frame):
     print('Operation Timed Out', file=sys.stderr)
-    exit(99)
+    exit(1)
 
 
 def process_in(directory=None):
@@ -29,7 +29,7 @@ def process_in(directory=None):
             print('No configuration provided', file=sys.stderr)
             exit(1)
         else:
-            with open(os.path.join(directory, 'input'), 'w') as input_file:
+            with open(os.path.join(directory, 'input.json'), 'w') as input_file:
                 input_file.write(json.dumps(request))
 
         version = {'version': request['version']}
@@ -37,6 +37,7 @@ def process_in(directory=None):
 
     except SystemExit:
         print('System Exit detected', file=sys.stderr)
+        exit(124)
 
 
 def main(argv=None):

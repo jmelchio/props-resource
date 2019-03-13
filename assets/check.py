@@ -7,25 +7,34 @@ import sys
 
 def handler(signum, frame):
     print('Operation Timed Out', file=sys.stderr)
-    exit(99)
+    exit(124)
 
 
 def process_check():
     signal.alarm(5)
 
     try:
-        with sys.stdin as standard_in:
-            request = json.load(standard_in)
-
-        if request is None:
+        try:
+            with sys.stdin as standard_in:
+                request = json.load(standard_in)
+        except json.decoder.JSONDecodeError:
             print('No configuration provided', file=sys.stderr)
             exit(1)
         else:
-            version_list = [request['version']]
-            print(version_list)
+            try:
+                version = request['version']
+                if len(version) == 0:
+                    version = {"version": "0.0.0"}
+
+                version_list = [version]
+            except KeyError:
+                version_list = [{"version": "0.0.0"}]
+
+            print(json.dumps(version_list))
 
     except SystemExit:
         print('System Exit detected', file=sys.stderr)
+        exit(124)
 
 
 def main():

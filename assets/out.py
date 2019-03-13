@@ -8,14 +8,13 @@ import sys
 
 def handler(signum, frame):
     print('Operation Timed Out', file=sys.stderr)
-    exit(99)
+    exit(1)
 
 
 def process_out(directory=None):
     signal.alarm(5)
 
     try:
-
         with sys.stdin as standard_in:
             request = json.load(standard_in)
 
@@ -38,6 +37,7 @@ def process_out(directory=None):
 
     except SystemExit:
         print('System Exit detected', file=sys.stderr)
+        exit(124)
 
 
 def main(argv=None):
