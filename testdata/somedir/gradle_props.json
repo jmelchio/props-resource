@@ -1,0 +1,11 @@
+{
+  "somevar": "somevalue",
+  "version": {
+    "semver": "1.4.5"
+  },
+  "other": {
+    "structure": {
+      "holds": ["value_one", "value_two"]
+    }
+  }
+}
