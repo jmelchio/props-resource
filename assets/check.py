@@ -23,7 +23,7 @@ def process_check():
         else:
             try:
                 version = request['version']
-                if len(version) == 0:
+                if version is None or len(version) == 0:
                     version = {"build_id": "0"}
 
                 version_list = [version]
