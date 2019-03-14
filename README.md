@@ -14,4 +14,4 @@ Tests are run as part of the creation of the `docker` images by running
 ``` bash
 docker build -t [image:tag] .
 ```
-in the base directory of the projects. Assuming the test all succeed a new image will be built. In case of test failures the build is aborted.
+in the base directory of the project. Assuming the test all succeed a new image will be built. In case of test failures the build is aborted.
