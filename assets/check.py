@@ -24,11 +24,11 @@ def process_check():
             try:
                 version = request['version']
                 if len(version) == 0:
-                    version = {"version": "0.0.0"}
+                    version = {"build_id": "0"}
 
                 version_list = [version]
             except KeyError:
-                version_list = [{"version": "0.0.0"}]
+                version_list = [{"build_id": "0"}]
 
             print(json.dumps(version_list))
 

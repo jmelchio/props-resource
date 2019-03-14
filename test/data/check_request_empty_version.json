@@ -1,6 +1,6 @@
 {
   "source": {
-    "path": "gradle_props.json"
+    "path": "somefile.properties"
   },
   "version": {}
 }

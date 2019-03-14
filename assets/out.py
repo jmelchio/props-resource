@@ -15,25 +15,36 @@ def process_out(directory=None):
     signal.alarm(5)
 
     try:
-        with sys.stdin as standard_in:
-            request = json.load(standard_in)
-
-        if request is None:
+        try:
+            with sys.stdin as standard_in:
+                request = json.load(standard_in)
+        except json.decoder.JSONDecodeError:
             print('No configuration provided', file=sys.stderr)
             exit(1)
         else:
-            props_path = request['params']['props_path']
-            with open(os.path.join(directory, props_path), 'r') as props_file:
-                gradle_props = json.load(props_file)
+            try:
+                path = request['source']['path']
+                if len(path) == 0:
+                    raise KeyError
 
-            out = {
-                'version': gradle_props['version'],
-                'metadata': [
-                    {'name': 'gradle_props', 'value': gradle_props}
-                ]
-            }
+            except KeyError:
+                print('No path provided', file=sys.stderr)
+                exit(1)
+            else:
+                metadata = []
+                with open(os.path.join(directory, path), 'r') as props_file:
+                    for line in props_file.readlines():
+                        parts = line.split('=')
+                        if len(parts) == 2:
+                            metadata.append({"name": parts[0].strip(), "value": parts[1].strip()})
 
-            print(out)
+                response = {
+                    "version": {
+                        "build_id": os.getenv('BUILD_ID', '123456')
+                    },
+                    "metadata": metadata
+                }
+                print(json.dumps(response))
 
     except SystemExit:
         print('System Exit detected', file=sys.stderr)

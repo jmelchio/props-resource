@@ -10,7 +10,7 @@ class TestCheck(unittest.TestCase):
             completed_process = subprocess.run('/opt/resource/check', stdin=input_file, capture_output=True)
             self.assertEqual(0, completed_process.returncode, 'process should return 0 exit')
             result = json.loads(completed_process.stdout)
-            self.assertEqual(result[0]['version'], '1.1.1', 'version does not match expected value')
+            self.assertEqual(result[0]['build_id'], '1', 'version does not match expected value')
 
     def test_should_time_out(self):
         try:
@@ -32,14 +32,14 @@ class TestCheck(unittest.TestCase):
             completed_process = subprocess.run('/opt/resource/check', stdin=input_file, capture_output=True)
             self.assertEqual(0, completed_process.returncode, 'process should return 0 exit')
             result = json.loads(completed_process.stdout)
-            self.assertEqual(result[0]['version'], '0.0.0', 'version does not match expected value')
+            self.assertEqual(result[0]['build_id'], '0', 'version does not match expected value')
 
     def test_should_return_first_version_v2(self):
         with open('./data/check_request_empty_version.json', 'r') as input_file:
             completed_process = subprocess.run('/opt/resource/check', stdin=input_file, capture_output=True)
             self.assertEqual(0, completed_process.returncode, 'process should return 0 exit')
             result = json.loads(completed_process.stdout)
-            self.assertEqual(result[0]['version'], '0.0.0', 'version does not match expected value')
+            self.assertEqual(result[0]['build_id'], '0', 'version does not match expected value')
 
 
 if __name__ == '__main__':

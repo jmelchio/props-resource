@@ -4,5 +4,9 @@
   },
   "version": {
     "build_id": "1"
+  },
+  "params": {
+    "param1": "value1",
+    "param2": "value2"
   }
 }

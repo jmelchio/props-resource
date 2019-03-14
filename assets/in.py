@@ -11,46 +11,37 @@ def handler(signum, frame):
     exit(1)
 
 
-def process_in(directory=None):
-    if not os.path.exists(directory):
-        try:
-            os.makedirs(directory)
-        except OSError as e:
-            print('Failed to create output directory: %s' % directory, file=sys.stderr)
-            exit(1)
-
+def process_in():
     signal.alarm(5)
 
     try:
-        with sys.stdin as standard_in:
-            request = json.load(standard_in)
-
-        if request is None:
+        try:
+            with sys.stdin as standard_in:
+                request = json.load(standard_in)
+        except json.decoder.JSONDecodeError:
             print('No configuration provided', file=sys.stderr)
             exit(1)
         else:
-            with open(os.path.join(directory, 'input.json'), 'w') as input_file:
-                input_file.write(json.dumps(request))
+            try:
+                version = request['version']
+                if len(version) == 0:
+                    version = {"build_id": "0"}
 
-        version = {'version': request['version']}
-        print(version)
+                response = {"version": version, "metadata": []}
+            except KeyError:
+                response = {"version": {"build_id": "0"}, "metadata": []}
+
+            print(json.dumps(response))
 
     except SystemExit:
         print('System Exit detected', file=sys.stderr)
         exit(124)
 
 
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-
-    if len(argv) < 2:
-        print('Usage: %s PATH' % argv[0], file=sys.stderr)
-        exit(1)
-
+def main():
     signal.signal(signal.SIGALRM, handler)
 
-    process_in(argv[1])
+    process_in()
 
 
 if __name__ == '__main__':

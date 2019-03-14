@@ -1,8 +1,5 @@
 {
   "source": {
-    "path": "gradle_props.json"
-  },
-  "ref": {
-    "ref": "1234567"
+    "path": "somefile.properties"
   }
 }
