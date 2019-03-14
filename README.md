@@ -8,7 +8,7 @@ The `in` and `check` scripts have been implemented but don't do anything meaning
 
 ## Requirements
 
-The `props-resource` is written in [Python](https://www.python.org/) so working on it takes an editor of some sort and a `python3` installation. For building you also need [Docker](https://www.docker.com/) because that is how custom resources provided to Concourse.
+The `props-resource` is written in [Python](https://www.python.org/) so working on it takes an editor of some sort and a `python3` installation. For building you also need [Docker](https://www.docker.com/) because that is how custom resources are provided to Concourse.
 
 Tests are run as part of the creation of the `docker` images by running
 ``` bash
