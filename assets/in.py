@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
 import json
-import os
 import signal
 import sys
 
 
-def handler(signum, frame):
+def handler(_signum, _frame):
     print('Operation Timed Out', file=sys.stderr)
     exit(1)
 
