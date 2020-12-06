@@ -1,4 +1,4 @@
-FROM python:3.7-alpine AS resource
+FROM python:3.8-alpine AS resource
 
 COPY ./assets/check.py /opt/resource/check
 COPY ./assets/in.py /opt/resource/in
